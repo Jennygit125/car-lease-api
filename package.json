@@ -9,8 +9,8 @@
     "build": "tsx --tsconfig tsconfig.json src/server.ts",
     "start": "node dist/server.js",
     "swagger": "tsx swagger.ts",
-    "migration:generate": "typeorm-ts-node-esm migration:generate -d src/db/datasource.ts",
-    "migration:run": "typeorm-ts-node-esm migration:run -d src/db/datasource.ts",
+    "migration:generate": "tsx node_modules/typeorm/cli.js migration:generate src/db/migrations/myFirst -d src/db/datasource.ts",
+    "migration:run": "tsx node_modules/typeorm/cli.js migration:run -d src/db/datasource.ts",
     "migration:revert": "typeorm-ts-node-esm migration:revert -d src/db/datasource.ts"
   },
   "dependencies": {
@@ -46,6 +46,8 @@
     "@types/node": "^22.20.1",
     "@types/swagger-ui-express": "^4.1.8",
     "swagger-autogen": "^2.23.7",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
     "tsx": "^4.23.1",
     "typescript": "^5.9.3"
   }

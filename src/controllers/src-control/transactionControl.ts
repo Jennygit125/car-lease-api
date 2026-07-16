@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { AppDataSource } from '../../db/datasource';
 import { Wallet } from '../src-entity/walletEntity';
-import { Transaction } from '../src-entity/transactionEntity';
+import { Transaction } from '../entity';
 
 
 // GET ALL TRANSACTIONS FOR USER'S WALLET (PAGINATED)
