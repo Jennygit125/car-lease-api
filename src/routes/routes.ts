@@ -18,6 +18,7 @@ import {
   transactionCtrl,
   adminCtrl
 } from '../controllers/control'; 
+import { validateWallet } from '../validators/wallet';
 
 const apiRouter = Router();
 
@@ -64,12 +65,12 @@ apiRouter.delete('/reviews/:id', isAuthenticated, reviewCtrl.deleteReview);
 // ==========================================
 // WALLET MANAGEMENT
 // ==========================================
-apiRouter.get('/wallet', isAuthenticated, walletCtrl.getWallet);
-apiRouter.post('/wallet/deposit', isAuthenticated, walletCtrl.depositFunds);
-apiRouter.post('/wallet/link-bank', isAuthenticated, walletCtrl.linkBankAccount);
-apiRouter.post('/wallet/verify-bank', isAuthenticated, walletCtrl.verifyBankAccount);
-apiRouter.post('/wallet/withdraw', isAuthenticated, walletCtrl.withdrawFunds);
-apiRouter.get('/wallet/transactions', isAuthenticated, walletCtrl.getTransactionHistory);
+apiRouter.get('/wallet', isAuthenticated,validateWallet, walletCtrl.getWallet);
+apiRouter.post('/wallet/deposit', isAuthenticated, validateWallet, walletCtrl.depositFunds);
+apiRouter.post('/wallet/link-bank', isAuthenticated, validateWallet, walletCtrl.linkBankAccount);
+apiRouter.post('/wallet/verify-bank', isAuthenticated, validateWallet, walletCtrl.verifyBankAccount);
+apiRouter.post('/wallet/withdraw', isAuthenticated, validateWallet, walletCtrl.withdrawFunds);
+apiRouter.get('/wallet/transactions', isAuthenticated, validateWallet, walletCtrl.getTransactionHistory);
 
 
 // ==========================================

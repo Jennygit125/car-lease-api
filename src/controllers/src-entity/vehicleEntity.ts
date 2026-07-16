@@ -66,6 +66,7 @@ export class Vehicle {
   @Column({ type: 'varchar', default: 'V6 3.0L' })
   engineType!: string;
 
+  @Index()
   @Column({
     type: 'enum',
     enum: FuelType,
@@ -73,6 +74,7 @@ export class Vehicle {
   })
   fuelType!: FuelType;
 
+  @Index()
   @Column({
     type: 'enum',
     enum: TransmissionType,
@@ -88,16 +90,23 @@ export class Vehicle {
   longitude?: number;
 
   // Rent Period Setting limits (in days)
+  @Index()
   @Column({ type: 'int', default: 1 }) // Min 1 day rental
   minRentDays!: number;
 
+  @Index()
   @Column({ type: 'int', default: 30 }) // Max 30 days rental
   maxRentDays!: number;
+
+  @Index()
   @Column({ type: 'boolean', default: true })
   isAvailable!: boolean;
 
   @Column({ type: 'text', array: true, default: '{}' }) // Native PG array syntax for image URLs
   images?: string[];
+
+  @Column({ type: 'text', nullable: true })
+  description?: string;
 
   @CreateDateColumn()
   createdAt!: Date;

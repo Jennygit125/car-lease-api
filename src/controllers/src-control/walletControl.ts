@@ -2,12 +2,21 @@ import { Request, Response } from 'express';
 import crypto from 'crypto';
 import { AppDataSource } from '../../db/datasource';
 import { Wallet, Transaction, TransactionType, TransactionStatus } from '../entity';
-
+import axios from 'axios';
  
 const generateMicroDeposits = (): [number, number] => {
   const dep1 = crypto.randomInt(1, 100); // Safe 1 to 99 cents
   const dep2 = crypto.randomInt(1, 100);
   return [dep1, dep2];
+};
+
+const getWalletId = async (userId: string): Promise<string> => {
+  const wallet = await AppDataSource.getRepository(Wallet).findOne({ 
+    where: { userId },
+    select: ['id'] 
+  });
+  if (!wallet) throw new Error('WALLET_NOT_FOUND');
+  return wallet.id;
 };
 
 
@@ -157,77 +166,110 @@ export const verifyBankAccount = async (req: Request, res: Response) => {
 };
 
 
-// 3. WITHDRAW FUNDS (SAFE MATH & CONCURRENCY GUARD)
+
 
 export const withdrawFunds = async (req: Request, res: Response) => {
   // #swagger.tags = ['Wallet']
   const userId = req.user?.id;
-  const { amount } = req.body; // Expecting cents as integer (e.g., 1000 for $10.00)
+  const { amount } = req.body; // Expecting lowest denomination integer (e.g., Kobo/Cents)
+
+  // Validation
+  if (!userId) {
+    return res.status(401).json({ message: 'Unauthorized.' });
+  }
 
   const withdrawAmount = Number(amount);
   if (!Number.isInteger(withdrawAmount) || withdrawAmount <= 0) {
-    return res.status(400).json({ message: 'Withdrawal amount must be a positive integer representing cents.' });
+    return res.status(400).json({ message: 'Withdrawal amount must be a positive integer.' });
   }
 
+  const reference = `WDL-${crypto.randomBytes(12).toString('hex').toUpperCase()}`;
+  let gatewayBankToken = '';
+
   try {
+    // Database Isolation (Row locking)
     const result = await AppDataSource.transaction(async (transactionalEntityManager) => {
-      // Pessimistic Write lock ensures no concurrency anomalies (like double withdrawal) can happen
       const wallet = await transactionalEntityManager.getRepository(Wallet)
         .createQueryBuilder('wallet')
         .setLock('pessimistic_write')
         .where('wallet.userId = :userId', { userId })
         .getOne();
 
-      if (!wallet) {
-        throw new Error('WALLET_NOT_FOUND');
-      }
-
-      if (!wallet.isBankVerified || !wallet.gatewayBankToken) {
-        throw new Error('BANK_UNVERIFIED');
-      }
-
+      if (!wallet) throw new Error('WALLET_NOT_FOUND');
+      if (!wallet.isBankVerified || !wallet.gatewayBankToken) throw new Error('BANK_UNVERIFIED');
+      gatewayBankToken = wallet.gatewayBankToken;
       const currentBalance = Number(wallet.balance);
-      if (currentBalance < withdrawAmount) {
-        throw new Error('INSUFFICIENT_FUNDS');
-      }
+      if (currentBalance < withdrawAmount) throw new Error('INSUFFICIENT_FUNDS');
 
-      // Perform clean integer math safely
-      wallet.balance = currentBalance - withdrawAmount;
+      // Update balance safely
+      const newBalance = currentBalance - withdrawAmount;
+      wallet.balance = newBalance.toString() as any;
       await transactionalEntityManager.save(wallet);
 
-      // Ledger Entry Generation
-      const reference = `WDL-${crypto.randomBytes(12).toString('hex').toUpperCase()}`;
+      // Log Ledger Entry as PENDING first
       const logEntry = transactionalEntityManager.getRepository(Transaction).create({
         walletId: wallet.id,
         amount: withdrawAmount,
         type: TransactionType.DEBIT,
-        status: TransactionStatus.SUCCESS,
-        description: `Withdrawal of $${(withdrawAmount / 100).toFixed(2)} to verified account.`,
+        status: TransactionStatus.PENDING, 
+        description: `Withdrawal processing for base units: ${withdrawAmount}`,
         reference,
       });
 
       await transactionalEntityManager.save(logEntry);
-
-      return { wallet, logEntry };
+      return { newBalance, logEntry };
     });
 
-    return res.status(200).json({
-      success: true,
-      message: 'Withdrawal completed successfully.',
-      newBalance: Number(result.wallet.balance), // Returned in cents
-      transaction: result.logEntry,
-    });
+    // Network Outbound Trigger (Safely OUTSIDE DB transaction lock)
+    try {
+      // Example using Paystack Transfer Feature
+      await axios.post('https://paystack.co', {
+        source: "balance",
+        reason: "Wallet Withdrawal",
+        amount: withdrawAmount, // e.g., in Kobo
+        recipient: gatewayBankToken, // Your saved recipient token
+        reference: reference
+      }, {
+        headers: { Authorization: `Bearer ${process.env.PAYSTACK_SECRET_KEY}` }
+      });
+
+      return res.status(200).json({
+        success: true,
+        message: 'Withdrawal initiated successfully.',
+        newBalance: result.newBalance,
+        reference: reference
+      });
+
+    } catch (gatewayError: any) {
+      console.error('Payment Gateway Disconnection:', gatewayError?.response?.data || gatewayError.message);
+      
+      // CRITICAL: reverse the balance immediately if the gateway rejects instantly
+      await AppDataSource.transaction(async (tx) => {
+        const wallet = await tx.getRepository(Wallet).findOne({ where: { userId } });
+        if (wallet) {
+          wallet.balance = (Number(wallet.balance) + withdrawAmount).toString() as any;
+          await tx.save(wallet);
+        }
+        await tx.getRepository(Transaction).update({ reference }, { 
+          status: TransactionStatus.FAILED,
+          description: 'Gateway initialization rejected. Refunded.'
+        });
+      });
+
+      return res.status(502).json({ message: 'Payout engine rejected request. Funds reversed.' });
+    }
 
   } catch (error: any) {
-    console.error('Transaction Aborted! Reason:', error.message);
+    console.error('Database Transaction Failed:', error.message);
 
     if (error.message === 'WALLET_NOT_FOUND') return res.status(404).json({ message: 'Wallet not configured.' });
     if (error.message === 'BANK_UNVERIFIED') return res.status(403).json({ message: 'Bank verification pending.' });
-    if (error.message === 'INSUFFICIENT_FUNDS') return res.status(400).json({ message: 'Insufficient funds.' });
+    if (error.message === 'INSUFFICIENT_FUNDS') return res.status(400).json({ message: 'Insufficient wallet balance.' });
 
-    return res.status(500).json({ message: 'Internal transaction database error.' });
+    return res.status(500).json({ message: 'Internal server processing error.' });
   }
 };
+
 
 //GET WALLET BALANCE & STATUS
 
@@ -267,67 +309,44 @@ export const getWallet = async (req: Request, res: Response) => {
 };
 
 
-// DEPOSIT FUNDS (MOCK PROCESSOR )
+// DEPOSIT FUNDS 
 
 export const depositFunds = async (req: Request, res: Response) => {
-  // #swagger.tags = ['Wallet']
   const userId = req.user?.id;
-  const { amount } = req.body; // Integer cents (e.g., 5000 for $50.00)
-
-  const depositAmount = Number(amount);
-  if (!Number.isInteger(depositAmount) || depositAmount <= 0) {
-    return res.status(400).json({ message: 'Deposit amount must be a positive integer in cents.' });
-  }
+  const { amount } = req.body; // Amount in Naira
 
   try {
-    const result = await AppDataSource.transaction(async (transactionalEntityManager) => {
-      const walletRepo = transactionalEntityManager.getRepository(Wallet);
-      const transactionRepo = transactionalEntityManager.getRepository(Transaction);
-
-      // Lock on write to guarantee balance consistency
-      let wallet = await walletRepo.createQueryBuilder('wallet')
-        .setLock('pessimistic_write')
-        .where('wallet.userId = :userId', { userId })
-        .getOne();
-
-      if (!wallet) {
-        wallet = walletRepo.create({ 
-          userId, 
-          balance: 0, 
-          pendingBalance: 0, 
-          verificationAttempts: 0 
-        });
-      }
-
+    const reference = `DEP-${crypto.randomBytes(8).toString('hex').toUpperCase()}`;
     
-      wallet.balance = Number(wallet.balance) + depositAmount;
-      await transactionalEntityManager.save(wallet);
-
-      // Write transaction ledger item
-      const reference = `DEP-${crypto.randomBytes(12).toString('hex').toUpperCase()}`;
-      const logEntry = transactionRepo.create({
-        walletId: wallet.id,
-        amount: depositAmount,
-        type: TransactionType.CREDIT,
-        status: TransactionStatus.SUCCESS,
-        description: `Deposited $${(depositAmount / 100).toFixed(2)} via credit card.`,
-        reference,
-      });
-      await transactionalEntityManager.save(logEntry);
-
-      return { wallet, logEntry };
+    // Initiate with Paystack
+    const paystackRes = await axios.post('https://api.paystack.co/transaction/initialize', {
+      email: req.user?.email, 
+      amount: Math.round(Number(amount) * 100), // Convert to Kobo
+      reference
+    }, {
+      headers: { Authorization: `Bearer ${process.env.PAYSTACK_SECRET_KEY}` }
     });
 
-    return res.status(200).json({
-      success: true,
-      message: 'Deposit completed successfully.',
-      newBalance: Number(result.wallet.balance),
-      transaction: result.logEntry,
+    // Log as PENDING in  DB
+    await AppDataSource.getRepository(Transaction).save({
+      walletId: (await getWalletId(userId!)), // Helper to find wallet
+      amount: amount * 100, // Store in cents
+      type: TransactionType.CREDIT,
+      status: TransactionStatus.PENDING,
+      reference
     });
-  } catch (error) {
-    console.error('Deposit Error:', error);
-    return res.status(500).json({ message: 'Internal server error processing deposit.' });
+
+    return res.status(200).json({ 
+      success: true, 
+      authorization_url: paystackRes.data.data.authorization_url 
+    });
+  } catch (error: any) {
+  if (error.response) {
+    console.error('Paystack Error:', error.response.data);
+    return res.status(error.response.status).json({ message: 'Payment gateway error.' });
   }
+  return res.status(500).json({ message: 'Internal server error.' });
+}
 };
 
 

@@ -5,7 +5,8 @@ import {
   OneToOne, 
   JoinColumn, 
   OneToMany,
-  UpdateDateColumn
+  UpdateDateColumn,
+  Index
 } from 'typeorm';
 import { User } from './userEntity';
 import { Transaction } from './transactionEntity';
@@ -15,6 +16,7 @@ export class Wallet {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
+  @Index()
   @Column({ type: 'uuid', unique: true })
   userId!: string;
 
