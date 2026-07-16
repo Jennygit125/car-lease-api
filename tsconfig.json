@@ -14,6 +14,6 @@
     "forceConsistentCasingInFileNames": true,  /* Prevents case-sensitivity crashes in Docker */
     "skipLibCheck": true                        /* Fast container compilation speeds */
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "src/server.ts"],
   "exclude": ["node_modules", "build"]
 }
