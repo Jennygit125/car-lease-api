@@ -1,19 +1,18 @@
 {
   "compilerOptions": {
     "target": "ES2022",                         /* Modern JavaScript features for backend */
-    "module": "ESNext",                         /* Enables modern ES modules (import/export) */
+    "module": "ESNext",
     "moduleResolution": "Bundler",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "allowSyntheticDefaultImports": true,
-                                /* Allows extensionless relative imports */
     "esModuleInterop": true,                    /* Smooth compatibility with older npm packages */
     "sourceMap": true,                          /* Keeps your original line numbers in Docker logs */
-    "outDir": "build",                          /* Compiles files here */
+    "outDir": "./dist",                          /* Compiles files here */
     "rootDir": "src",                           /* Prevents nested 'build/src' folders */
     "forceConsistentCasingInFileNames": true,  /* Prevents case-sensitivity crashes in Docker */
     "skipLibCheck": true                        /* Fast container compilation speeds */
   },
-  "include": ["src/**/*", "src/server.ts"],
+  "include": ["src/**/*"],
   "exclude": ["node_modules", "build"]
 }

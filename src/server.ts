@@ -11,9 +11,9 @@ import path from 'path';
 import process from 'process';
 
 // Importing Data Source, Jobs, and Routes
-import { AppDataSource } from './db/datasource';
-import { startBookingStatusScheduler } from './jobs/bookingScheduler';
-import apiRouter from './routes/routes';
+import { AppDataSource } from '././db/datasource';
+import { startBookingStatusScheduler } from '././jobs/bookingScheduler';
+import apiRouter from '././routes/routes';
 
 dotenv.config();
 

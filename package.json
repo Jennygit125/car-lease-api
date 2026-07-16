@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "tsx watch src/server.ts",
-    "build": "pnpm run swagger && tsc",
+    "build": "tsx --tsconfig tsconfig.json src/server.ts",
     "start": "node dist/server.js",
     "swagger": "tsx swagger.ts",
     "migration:generate": "typeorm-ts-node-esm migration:generate -d src/db/datasource.ts",

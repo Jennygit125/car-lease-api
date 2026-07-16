@@ -9,7 +9,6 @@ cloudinary.config({
 
 const storage = multer.memoryStorage();
 
-// More permissive filter for valid image formats
 const fileFilter = (req: any, file: Express.Multer.File, callback: any) => {
   // Common image types
   const allowedMimeTypes = [
@@ -19,7 +18,7 @@ const fileFilter = (req: any, file: Express.Multer.File, callback: any) => {
     'image/webp'
   ];
 
-  // Also allow 'application/octet-stream' which Postman often uses for file uploads
+  // Also allow application/octet-stream which Postman uses for file uploads
   const isImage = allowedMimeTypes.includes(file.mimetype);
   const isBinary = file.mimetype === 'application/octet-stream';
 
@@ -40,7 +39,7 @@ export const upload = multer({
 export const uploadToCloudinary = (fileBuffer: Buffer, folder: string): Promise<string> => {
   return new Promise((resolve, reject) => {
     const uploadStream = cloudinary.uploader.upload_stream(
-      { folder, resource_type: 'image' }, // Force 'image' resource type
+      { folder, resource_type: 'image' }, // Force image resource type
       (error, result) => {
         if (error) return reject(error);
         resolve(result?.secure_url || '');
