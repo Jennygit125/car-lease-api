@@ -3,3 +3,6 @@ node_modules
 dist
 .git
 .env
+# Documentation folders
+dbdoc
+schema_report

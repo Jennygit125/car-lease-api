@@ -1,0 +1,1315 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>car_lease_api.public</title>
+        <!-- Tell the browser to be responsive to screen width -->
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
+        <!-- Bootstrap 3.3.5 -->
+        <link rel="stylesheet" href="bower/admin-lte/bootstrap/css/bootstrap.min.css">
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="bower/font-awesome/css/font-awesome.min.css">
+        <!-- Ionicons -->
+        <link rel="stylesheet" href="bower/ionicons/css/ionicons.min.css">
+        <!-- DataTables -->
+        <link rel="stylesheet" href="bower/datatables.net-bs/css/dataTables.bootstrap.min.css">
+        <link rel="stylesheet" href="bower/datatables.net-buttons-bs/css/buttons.bootstrap.min.css">
+        <!-- Code Mirror -->
+        <link rel="stylesheet" href="bower/codemirror/codemirror.css">
+        <!-- Fonts -->
+        <link href='fonts/indieflower/indie-flower.css' rel='stylesheet' type='text/css'>
+        <link href='fonts/source-sans-pro/source-sans-pro.css' rel='stylesheet' type='text/css'>
+
+        <!-- Theme style -->
+        <link rel="stylesheet" href="bower/admin-lte/dist/css/AdminLTE.min.css">
+        <!-- Salvattore -->
+        <link rel="stylesheet" href="bower/salvattore/salvattore.css">
+        <!-- AdminLTE Skins. Choose a skin from the css/skins
+           folder instead of downloading all of them to reduce the load. -->
+        <link rel="stylesheet" href="bower/admin-lte/dist/css/skins/_all-skins.min.css">
+        <!-- SchemaSpy -->
+        <link rel="stylesheet" href="schemaSpy.css">
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="bower/html5shiv/html5shiv.min.js"></script>
+        <script src="bower/respond/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
+    <body class="hold-transition skin-blue layout-top-nav">
+        <div class="wrapper">
+            <header class="main-header">
+                <nav class="navbar navbar-static-top">
+                    <div class="container">
+                        <div class="navbar-header">
+                            <a href="index.html" class="navbar-brand"><b>car_lease_api</b></a><span class="navbar-brand" style="padding-left: 0">.public</span>
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
+                        </div>
+
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+                            <ul class="nav navbar-nav">
+                                <li><a href="index.html">Tables <span class="sr-only">(current)</span></a></li>
+                                <li><a href="columns.html" title="All of the columns in the schema">Columns</a></li>
+                                <li><a href="constraints.html" title="Useful for diagnosing error messages that just give constraint name or number">Constraints</a></li>
+                                <li><a href="relationships.html" title="Diagram of table relationships">Relationships</a></li>
+                                <li><a href="orphans.html" title="View of tables with neither parents nor children">Orphan&nbsp;Tables</a></li>
+                                <li><a href="anomalies.html" title="Things that might not be quite right">Anomalies</a></li>
+                                <li><a href="routines.html" title="Procedures and functions">Routines</a></li>
+                            </ul>
+                        </div>
+                        <!-- /.navbar-collapse -->
+                        <!-- Navbar Right Menu -->
+                    </div>
+                    <!-- /.container-fluid -->
+                </nav>
+            </header>
+            <!-- Main content -->
+            <!-- Full Width Column -->
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <section class="content-header">
+                    <h1>Columns</h1>
+                </section>
+                <!-- Main content -->
+                <section class="content">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                            <h3 class="box-title">Columns</h3>
+                        </div>
+                        <div class="box-body">
+                            <table
+                                    id="column_table"
+                                    class="table table-bordered table-striped dataTable"
+                                    role="grid"
+                                    data-paging="true"
+                                    data-page-length="50"
+                                    data-length-change="false">
+                                <thead align='left'>
+                                    <tr>
+                                        <th>Table</th>
+                                        <th>Type</th>
+                                        <th>Column</th>
+                                        <th>Type</th>
+                                        <th>Size</th>
+                                        <th title='Are nulls allowed?'>Nullable</th>
+                                        <th title='Is column automatically updated?'>Auto</th>
+                                        <th title='Default value'>Default</th>
+                                        <th title='Comments' class="toggle"><span>Comments</span></th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+                <script>
+                    var tableData = [
+    {
+        "tableName": "audit_logs",
+        "tableFileName": "audit_logs",
+        "tableType": "Table",
+        "keyClass": "primaryKey",
+        "keyTitle": "Primary Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'></i>id",
+        "type": "uuid",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "uuid_generate_v4()",
+        "comments": ""
+    },
+    {
+        "tableName": "audit_logs",
+        "tableFileName": "audit_logs",
+        "tableType": "Table",
+        "keyClass": "foreignKey",
+        "keyTitle": "Foreign Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'></i>adminId",
+        "type": "uuid",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "audit_logs",
+        "tableFileName": "audit_logs",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "action",
+        "type": "varchar",
+        "length": 100,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "audit_logs",
+        "tableFileName": "audit_logs",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "targetEntityId",
+        "type": "uuid",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "audit_logs",
+        "tableFileName": "audit_logs",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "details",
+        "type": "jsonb",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "audit_logs",
+        "tableFileName": "audit_logs",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "ipAddress",
+        "type": "varchar",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "audit_logs",
+        "tableFileName": "audit_logs",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "createdAt",
+        "type": "timestamp",
+        "length": 29,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "now()",
+        "comments": ""
+    },
+    {
+        "tableName": "bookings",
+        "tableFileName": "bookings",
+        "tableType": "Table",
+        "keyClass": "primaryKey",
+        "keyTitle": "Primary Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'></i>id",
+        "type": "uuid",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "uuid_generate_v4()",
+        "comments": ""
+    },
+    {
+        "tableName": "bookings",
+        "tableFileName": "bookings",
+        "tableType": "Table",
+        "keyClass": "foreignKey",
+        "keyTitle": "Foreign Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'></i>customerId",
+        "type": "uuid",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "bookings",
+        "tableFileName": "bookings",
+        "tableType": "Table",
+        "keyClass": "foreignKey",
+        "keyTitle": "Foreign Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'></i>vehicleId",
+        "type": "uuid",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "bookings",
+        "tableFileName": "bookings",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "startDate",
+        "type": "timestamp",
+        "length": 29,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "bookings",
+        "tableFileName": "bookings",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "endDate",
+        "type": "timestamp",
+        "length": 29,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "bookings",
+        "tableFileName": "bookings",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "totalPrice",
+        "type": "numeric",
+        "length": 10,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "bookings",
+        "tableFileName": "bookings",
+        "tableType": "Table",
+        "keyClass": "indexedColumn",
+        "keyTitle": "Indexed",
+        "name": "<i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'></i>status",
+        "type": "bookings_status_enum",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "'PENDING'::bookings_status_enum",
+        "comments": ""
+    },
+    {
+        "tableName": "bookings",
+        "tableFileName": "bookings",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "createdAt",
+        "type": "timestamp",
+        "length": 29,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "now()",
+        "comments": ""
+    },
+    {
+        "tableName": "bookings",
+        "tableFileName": "bookings",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "updatedAt",
+        "type": "timestamp",
+        "length": 29,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "now()",
+        "comments": ""
+    },
+    {
+        "tableName": "log_activities",
+        "tableFileName": "log_activities",
+        "tableType": "Table",
+        "keyClass": "primaryKey",
+        "keyTitle": "Primary Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'></i>id",
+        "type": "uuid",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "uuid_generate_v4()",
+        "comments": ""
+    },
+    {
+        "tableName": "log_activities",
+        "tableFileName": "log_activities",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "action",
+        "type": "varchar",
+        "length": 255,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "log_activities",
+        "tableFileName": "log_activities",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "userId",
+        "type": "uuid",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "log_activities",
+        "tableFileName": "log_activities",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "ipAddress",
+        "type": "varchar",
+        "length": 45,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "log_activities",
+        "tableFileName": "log_activities",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "metaData",
+        "type": "jsonb",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "log_activities",
+        "tableFileName": "log_activities",
+        "tableType": "Table",
+        "keyClass": "indexedColumn",
+        "keyTitle": "Indexed",
+        "name": "<i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'></i>reference",
+        "type": "varchar",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "log_activities",
+        "tableFileName": "log_activities",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "createdAt",
+        "type": "timestamp",
+        "length": 29,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "now()",
+        "comments": ""
+    },
+    {
+        "tableName": "reviews",
+        "tableFileName": "reviews",
+        "tableType": "Table",
+        "keyClass": "primaryKey",
+        "keyTitle": "Primary Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'></i>id",
+        "type": "uuid",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "uuid_generate_v4()",
+        "comments": ""
+    },
+    {
+        "tableName": "reviews",
+        "tableFileName": "reviews",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "rating",
+        "type": "int4",
+        "length": 10,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "reviews",
+        "tableFileName": "reviews",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "comment",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "reviews",
+        "tableFileName": "reviews",
+        "tableType": "Table",
+        "keyClass": "foreignKey",
+        "keyTitle": "Foreign Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'></i>userId",
+        "type": "uuid",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "reviews",
+        "tableFileName": "reviews",
+        "tableType": "Table",
+        "keyClass": "foreignKey",
+        "keyTitle": "Foreign Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'></i>vehicleId",
+        "type": "uuid",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "reviews",
+        "tableFileName": "reviews",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "createdAt",
+        "type": "timestamp",
+        "length": 29,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "now()",
+        "comments": ""
+    },
+    {
+        "tableName": "transactions",
+        "tableFileName": "transactions",
+        "tableType": "Table",
+        "keyClass": "primaryKey",
+        "keyTitle": "Primary Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'></i>id",
+        "type": "uuid",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "uuid_generate_v4()",
+        "comments": ""
+    },
+    {
+        "tableName": "transactions",
+        "tableFileName": "transactions",
+        "tableType": "Table",
+        "keyClass": "foreignKey",
+        "keyTitle": "Foreign Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'></i>walletId",
+        "type": "uuid",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "transactions",
+        "tableFileName": "transactions",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "amount",
+        "type": "numeric",
+        "length": 12,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "'0'::numeric",
+        "comments": ""
+    },
+    {
+        "tableName": "transactions",
+        "tableFileName": "transactions",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "type",
+        "type": "transactions_type_enum",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "transactions",
+        "tableFileName": "transactions",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "status",
+        "type": "transactions_status_enum",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "'SUCCESS'::transactions_status_enum",
+        "comments": ""
+    },
+    {
+        "tableName": "transactions",
+        "tableFileName": "transactions",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "description",
+        "type": "varchar",
+        "length": 255,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "transactions",
+        "tableFileName": "transactions",
+        "tableType": "Table",
+        "keyClass": "indexedColumn",
+        "keyTitle": "Indexed",
+        "name": "<i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'></i>reference",
+        "type": "varchar",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "transactions",
+        "tableFileName": "transactions",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "createdAt",
+        "type": "timestamp",
+        "length": 29,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "now()",
+        "comments": ""
+    },
+    {
+        "tableName": "users",
+        "tableFileName": "users",
+        "tableType": "Table",
+        "keyClass": "primaryKey",
+        "keyTitle": "Primary Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'></i>id",
+        "type": "uuid",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "uuid_generate_v4()",
+        "comments": ""
+    },
+    {
+        "tableName": "users",
+        "tableFileName": "users",
+        "tableType": "Table",
+        "keyClass": "indexedColumn",
+        "keyTitle": "Indexed",
+        "name": "<i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'></i>email",
+        "type": "varchar",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "users",
+        "tableFileName": "users",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "password",
+        "type": "varchar",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "users",
+        "tableFileName": "users",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "fullName",
+        "type": "varchar",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "users",
+        "tableFileName": "users",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "securityQuestion",
+        "type": "varchar",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "users",
+        "tableFileName": "users",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "securityAnswerHash",
+        "type": "varchar",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "users",
+        "tableFileName": "users",
+        "tableType": "Table",
+        "keyClass": "indexedColumn",
+        "keyTitle": "Indexed",
+        "name": "<i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'></i>role",
+        "type": "users_role_enum",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "'CUSTOMER'::users_role_enum",
+        "comments": ""
+    },
+    {
+        "tableName": "users",
+        "tableFileName": "users",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "isActive",
+        "type": "bool",
+        "length": 1,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "true",
+        "comments": ""
+    },
+    {
+        "tableName": "users",
+        "tableFileName": "users",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "suspendedAt",
+        "type": "timestamp",
+        "length": 29,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "users",
+        "tableFileName": "users",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "isVerified",
+        "type": "bool",
+        "length": 1,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "false",
+        "comments": ""
+    },
+    {
+        "tableName": "users",
+        "tableFileName": "users",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "profileImage",
+        "type": "varchar",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "users",
+        "tableFileName": "users",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "createdAt",
+        "type": "timestamp",
+        "length": 29,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "now()",
+        "comments": ""
+    },
+    {
+        "tableName": "users",
+        "tableFileName": "users",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "updatedAt",
+        "type": "timestamp",
+        "length": 29,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "now()",
+        "comments": ""
+    },
+    {
+        "tableName": "users",
+        "tableFileName": "users",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "deletedAt",
+        "type": "timestamp",
+        "length": 29,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "vehicles",
+        "tableFileName": "vehicles",
+        "tableType": "Table",
+        "keyClass": "primaryKey",
+        "keyTitle": "Primary Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'></i>id",
+        "type": "uuid",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "uuid_generate_v4()",
+        "comments": ""
+    },
+    {
+        "tableName": "vehicles",
+        "tableFileName": "vehicles",
+        "tableType": "Table",
+        "keyClass": "foreignKey",
+        "keyTitle": "Foreign Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'></i>ownerId",
+        "type": "uuid",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "vehicles",
+        "tableFileName": "vehicles",
+        "tableType": "Table",
+        "keyClass": "indexedColumn",
+        "keyTitle": "Indexed",
+        "name": "<i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'></i>brand",
+        "type": "varchar",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "vehicles",
+        "tableFileName": "vehicles",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "model",
+        "type": "varchar",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "vehicles",
+        "tableFileName": "vehicles",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "year",
+        "type": "int4",
+        "length": 10,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "vehicles",
+        "tableFileName": "vehicles",
+        "tableType": "Table",
+        "keyClass": "indexedColumn",
+        "keyTitle": "Indexed",
+        "name": "<i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'></i>vin",
+        "type": "varchar",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "vehicles",
+        "tableFileName": "vehicles",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "dailyPrice",
+        "type": "numeric",
+        "length": 10,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "vehicles",
+        "tableFileName": "vehicles",
+        "tableType": "Table",
+        "keyClass": "indexedColumn",
+        "keyTitle": "Indexed",
+        "name": "<i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'></i>engineType",
+        "type": "varchar",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "'V6 3.0L'::character varying",
+        "comments": ""
+    },
+    {
+        "tableName": "vehicles",
+        "tableFileName": "vehicles",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "fuelType",
+        "type": "vehicles_fueltype_enum",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "'PETROL'::vehicles_fueltype_enum",
+        "comments": ""
+    },
+    {
+        "tableName": "vehicles",
+        "tableFileName": "vehicles",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "transmission",
+        "type": "vehicles_transmission_enum",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "'AUTOMATIC'::vehicles_transmission_enum",
+        "comments": ""
+    },
+    {
+        "tableName": "vehicles",
+        "tableFileName": "vehicles",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "latitude",
+        "type": "numeric",
+        "length": 9,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "vehicles",
+        "tableFileName": "vehicles",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "longitude",
+        "type": "numeric",
+        "length": 9,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "vehicles",
+        "tableFileName": "vehicles",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "minRentDays",
+        "type": "int4",
+        "length": 10,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "1",
+        "comments": ""
+    },
+    {
+        "tableName": "vehicles",
+        "tableFileName": "vehicles",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "maxRentDays",
+        "type": "int4",
+        "length": 10,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "30",
+        "comments": ""
+    },
+    {
+        "tableName": "vehicles",
+        "tableFileName": "vehicles",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "isAvailable",
+        "type": "bool",
+        "length": 1,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "true",
+        "comments": ""
+    },
+    {
+        "tableName": "vehicles",
+        "tableFileName": "vehicles",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "images",
+        "type": "_text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "'{}'::text[]",
+        "comments": ""
+    },
+    {
+        "tableName": "vehicles",
+        "tableFileName": "vehicles",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "createdAt",
+        "type": "timestamp",
+        "length": 29,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "now()",
+        "comments": ""
+    },
+    {
+        "tableName": "vehicles",
+        "tableFileName": "vehicles",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "updatedAt",
+        "type": "timestamp",
+        "length": 29,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "now()",
+        "comments": ""
+    },
+    {
+        "tableName": "vehicles",
+        "tableFileName": "vehicles",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "deletedAt",
+        "type": "timestamp",
+        "length": 29,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "wallets",
+        "tableFileName": "wallets",
+        "tableType": "Table",
+        "keyClass": "primaryKey",
+        "keyTitle": "Primary Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'></i>id",
+        "type": "uuid",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "uuid_generate_v4()",
+        "comments": ""
+    },
+    {
+        "tableName": "wallets",
+        "tableFileName": "wallets",
+        "tableType": "Table",
+        "keyClass": "foreignKey",
+        "keyTitle": "Foreign Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'></i>userId",
+        "type": "uuid",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "wallets",
+        "tableFileName": "wallets",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "balance",
+        "type": "numeric",
+        "length": 12,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "'0'::numeric",
+        "comments": ""
+    },
+    {
+        "tableName": "wallets",
+        "tableFileName": "wallets",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "verificationAttempts",
+        "type": "int4",
+        "length": 10,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "0",
+        "comments": ""
+    },
+    {
+        "tableName": "wallets",
+        "tableFileName": "wallets",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "bankName",
+        "type": "varchar",
+        "length": 100,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "wallets",
+        "tableFileName": "wallets",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "accountNumber",
+        "type": "varchar",
+        "length": 50,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "wallets",
+        "tableFileName": "wallets",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "accountName",
+        "type": "varchar",
+        "length": 150,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "wallets",
+        "tableFileName": "wallets",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "isBankVerified",
+        "type": "bool",
+        "length": 1,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "false",
+        "comments": ""
+    },
+    {
+        "tableName": "wallets",
+        "tableFileName": "wallets",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "gatewayBankToken",
+        "type": "varchar",
+        "length": 100,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "wallets",
+        "tableFileName": "wallets",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "microDeposits",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "wallets",
+        "tableFileName": "wallets",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "pendingBalance",
+        "type": "numeric",
+        "length": 12,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "'0'::numeric",
+        "comments": ""
+    },
+    {
+        "tableName": "wallets",
+        "tableFileName": "wallets",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "updatedAt",
+        "type": "timestamp",
+        "length": 29,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "now()",
+        "comments": ""
+    }
+];
+                    var config = {
+                        pagination: true
+                    };
+                </script>
+            </div>
+            <!-- /.content-wrapper -->
+            <footer class="main-footer">
+                <div>
+                    <div class="pull-right hidden-xs">
+                        <a href="https://github.com/schemaspy/schemaspy" title="GitHub for SchemaSpy"><i class="fa fa-github-square fa-2x"></i></a>
+                        <a href="http://stackoverflow.com/questions/tagged/schemaspy" title="StackOverflow for SchemaSpy"><i class="fa fa-stack-overflow fa-2x"></i></a>
+                    </div>
+                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 7.0.2</a></strong>
+                </div>
+                <!-- /.container -->
+            </footer>
+        </div>
+        <!-- ./wrapper -->
+
+        <!-- jQuery 2.2.3 -->
+        <script src="bower/admin-lte/plugins/jQuery/jquery-2.2.3.min.js"></script>
+        <script src="bower/admin-lte/plugins/jQueryUI/jquery-ui.min.js"></script>
+        <!-- Bootstrap 3.3.5 -->
+        <script src="bower/admin-lte/bootstrap/js/bootstrap.min.js"></script>
+        <!-- DataTables -->
+        <script src="bower/datatables.net/jquery.dataTables.min.js"></script>
+        <script src="bower/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+        <script src="bower/datatables.net-buttons/dataTables.buttons.min.js"></script>
+        <script src="bower/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+        <script src="bower/datatables.net-buttons/buttons.html5.min.js"></script>
+        <script src="bower/datatables.net-buttons/buttons.print.min.js"></script>
+        <script src="bower/datatables.net-buttons/buttons.colVis.min.js"></script>
+        <!-- SheetJS -->
+        <script src="bower/js-xlsx/xlsx.full.min.js"></script>
+        <!-- pdfmake -->
+        <script src="bower/pdfmake/pdfmake.min.js"></script>
+        <script src="bower/pdfmake/vfs_fonts.js"></script>
+        <!-- SlimScroll -->
+        <script src="bower/admin-lte/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+        <!-- FastClick -->
+        <script src="bower/admin-lte/plugins/fastclick/fastclick.js"></script>
+        <!-- Salvattore -->
+        <script src="bower/salvattore/salvattore.min.js"></script>
+        <!-- AnchorJS -->
+        <script src="bower/anchor-js/anchor.min.js"></script>
+        <!-- CodeMirror -->
+        <script src="bower/codemirror/codemirror.js"></script>
+        <script src="bower/codemirror/sql.js"></script>
+        <!-- AdminLTE App -->
+        <script src="bower/admin-lte/dist/js/app.min.js"></script>
+        <script src="column.js"></script>
+        <script src="schemaSpy.js"></script>
+    </body>
+</html>

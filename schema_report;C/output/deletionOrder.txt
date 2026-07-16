@@ -1,0 +1,8 @@
+log_activities
+reviews
+bookings
+transactions
+audit_logs
+wallets
+vehicles
+users

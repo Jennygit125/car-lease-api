@@ -1,0 +1,1176 @@
+{
+  "name": "car_lease_api",
+  "tables": [
+    {
+      "name": "public.users",
+      "type": "BASE TABLE",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": false,
+          "default": "uuid_generate_v4()"
+        },
+        {
+          "name": "email",
+          "type": "varchar",
+          "nullable": false
+        },
+        {
+          "name": "password",
+          "type": "varchar",
+          "nullable": true
+        },
+        {
+          "name": "fullName",
+          "type": "varchar",
+          "nullable": false
+        },
+        {
+          "name": "securityQuestion",
+          "type": "varchar",
+          "nullable": true
+        },
+        {
+          "name": "securityAnswerHash",
+          "type": "varchar",
+          "nullable": true
+        },
+        {
+          "name": "role",
+          "type": "users_role_enum",
+          "nullable": false,
+          "default": "'CUSTOMER'::users_role_enum"
+        },
+        {
+          "name": "isActive",
+          "type": "boolean",
+          "nullable": false,
+          "default": "true"
+        },
+        {
+          "name": "suspendedAt",
+          "type": "timestamp without time zone",
+          "nullable": true
+        },
+        {
+          "name": "isVerified",
+          "type": "boolean",
+          "nullable": false,
+          "default": "false"
+        },
+        {
+          "name": "profileImage",
+          "type": "varchar",
+          "nullable": true
+        },
+        {
+          "name": "createdAt",
+          "type": "timestamp without time zone",
+          "nullable": false,
+          "default": "now()"
+        },
+        {
+          "name": "updatedAt",
+          "type": "timestamp without time zone",
+          "nullable": false,
+          "default": "now()"
+        },
+        {
+          "name": "deletedAt",
+          "type": "timestamp without time zone",
+          "nullable": true
+        }
+      ],
+      "indexes": [
+        {
+          "name": "PK_a3ffb1c0c8416b9fc6f907b7433",
+          "def": "CREATE UNIQUE INDEX \"PK_a3ffb1c0c8416b9fc6f907b7433\" ON public.users USING btree (id)",
+          "table": "public.users",
+          "columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "UQ_97672ac88f789774dd47f7c8be3",
+          "def": "CREATE UNIQUE INDEX \"UQ_97672ac88f789774dd47f7c8be3\" ON public.users USING btree (email)",
+          "table": "public.users",
+          "columns": [
+            "email"
+          ]
+        },
+        {
+          "name": "IDX_97672ac88f789774dd47f7c8be",
+          "def": "CREATE UNIQUE INDEX \"IDX_97672ac88f789774dd47f7c8be\" ON public.users USING btree (email)",
+          "table": "public.users",
+          "columns": [
+            "email"
+          ]
+        },
+        {
+          "name": "IDX_ace513fa30d485cfd25c11a9e4",
+          "def": "CREATE INDEX \"IDX_ace513fa30d485cfd25c11a9e4\" ON public.users USING btree (role)",
+          "table": "public.users",
+          "columns": [
+            "role"
+          ]
+        }
+      ],
+      "constraints": [
+        {
+          "name": "PK_a3ffb1c0c8416b9fc6f907b7433",
+          "type": "PRIMARY KEY",
+          "def": "PRIMARY KEY (id)",
+          "table": "public.users",
+          "referenced_table": "",
+          "columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "UQ_97672ac88f789774dd47f7c8be3",
+          "type": "UNIQUE",
+          "def": "UNIQUE (email)",
+          "table": "public.users",
+          "referenced_table": "",
+          "columns": [
+            "email"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "public.vehicles",
+      "type": "BASE TABLE",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": false,
+          "default": "uuid_generate_v4()"
+        },
+        {
+          "name": "ownerId",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "brand",
+          "type": "varchar",
+          "nullable": false
+        },
+        {
+          "name": "model",
+          "type": "varchar",
+          "nullable": false
+        },
+        {
+          "name": "year",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "vin",
+          "type": "varchar",
+          "nullable": false
+        },
+        {
+          "name": "dailyPrice",
+          "type": "numeric(10,2)",
+          "nullable": false
+        },
+        {
+          "name": "engineType",
+          "type": "varchar",
+          "nullable": false,
+          "default": "'V6 3.0L'::character varying"
+        },
+        {
+          "name": "fuelType",
+          "type": "vehicles_fueltype_enum",
+          "nullable": false,
+          "default": "'PETROL'::vehicles_fueltype_enum"
+        },
+        {
+          "name": "transmission",
+          "type": "vehicles_transmission_enum",
+          "nullable": false,
+          "default": "'AUTOMATIC'::vehicles_transmission_enum"
+        },
+        {
+          "name": "latitude",
+          "type": "numeric(9,6)",
+          "nullable": true
+        },
+        {
+          "name": "longitude",
+          "type": "numeric(9,6)",
+          "nullable": true
+        },
+        {
+          "name": "minRentDays",
+          "type": "integer",
+          "nullable": false,
+          "default": "1"
+        },
+        {
+          "name": "maxRentDays",
+          "type": "integer",
+          "nullable": false,
+          "default": "30"
+        },
+        {
+          "name": "isAvailable",
+          "type": "boolean",
+          "nullable": false,
+          "default": "true"
+        },
+        {
+          "name": "images",
+          "type": "text[]",
+          "nullable": false,
+          "default": "'{}'::text[]"
+        },
+        {
+          "name": "createdAt",
+          "type": "timestamp without time zone",
+          "nullable": false,
+          "default": "now()"
+        },
+        {
+          "name": "updatedAt",
+          "type": "timestamp without time zone",
+          "nullable": false,
+          "default": "now()"
+        },
+        {
+          "name": "deletedAt",
+          "type": "timestamp without time zone",
+          "nullable": true
+        }
+      ],
+      "indexes": [
+        {
+          "name": "PK_18d8646b59304dce4af3a9e35b6",
+          "def": "CREATE UNIQUE INDEX \"PK_18d8646b59304dce4af3a9e35b6\" ON public.vehicles USING btree (id)",
+          "table": "public.vehicles",
+          "columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "UQ_8288ce015b69c5856cf54e07a67",
+          "def": "CREATE UNIQUE INDEX \"UQ_8288ce015b69c5856cf54e07a67\" ON public.vehicles USING btree (vin)",
+          "table": "public.vehicles",
+          "columns": [
+            "vin"
+          ]
+        },
+        {
+          "name": "IDX_2af2b1382c2b8ecbbd77792319",
+          "def": "CREATE INDEX \"IDX_2af2b1382c2b8ecbbd77792319\" ON public.vehicles USING btree (brand)",
+          "table": "public.vehicles",
+          "columns": [
+            "brand"
+          ]
+        },
+        {
+          "name": "IDX_8288ce015b69c5856cf54e07a6",
+          "def": "CREATE UNIQUE INDEX \"IDX_8288ce015b69c5856cf54e07a6\" ON public.vehicles USING btree (vin)",
+          "table": "public.vehicles",
+          "columns": [
+            "vin"
+          ]
+        },
+        {
+          "name": "IDX_6bc75a5d53f09bc444994e5588",
+          "def": "CREATE INDEX \"IDX_6bc75a5d53f09bc444994e5588\" ON public.vehicles USING btree (\"engineType\")",
+          "table": "public.vehicles",
+          "columns": [
+            "engineType"
+          ]
+        }
+      ],
+      "constraints": [
+        {
+          "name": "FK_c0a0d32b2ae04801d6e5b9e5c80",
+          "type": "FOREIGN KEY",
+          "def": "FOREIGN KEY (\"ownerId\") REFERENCES users(id) ON DELETE CASCADE",
+          "table": "public.vehicles",
+          "referenced_table": "public.users",
+          "columns": [
+            "ownerId"
+          ],
+          "referenced_columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "PK_18d8646b59304dce4af3a9e35b6",
+          "type": "PRIMARY KEY",
+          "def": "PRIMARY KEY (id)",
+          "table": "public.vehicles",
+          "referenced_table": "",
+          "columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "UQ_8288ce015b69c5856cf54e07a67",
+          "type": "UNIQUE",
+          "def": "UNIQUE (vin)",
+          "table": "public.vehicles",
+          "referenced_table": "",
+          "columns": [
+            "vin"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "public.bookings",
+      "type": "BASE TABLE",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": false,
+          "default": "uuid_generate_v4()"
+        },
+        {
+          "name": "customerId",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "vehicleId",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "startDate",
+          "type": "timestamp without time zone",
+          "nullable": false
+        },
+        {
+          "name": "endDate",
+          "type": "timestamp without time zone",
+          "nullable": false
+        },
+        {
+          "name": "totalPrice",
+          "type": "numeric(10,2)",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "bookings_status_enum",
+          "nullable": false,
+          "default": "'PENDING'::bookings_status_enum"
+        },
+        {
+          "name": "createdAt",
+          "type": "timestamp without time zone",
+          "nullable": false,
+          "default": "now()"
+        },
+        {
+          "name": "updatedAt",
+          "type": "timestamp without time zone",
+          "nullable": false,
+          "default": "now()"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "PK_bee6805982cc1e248e94ce94957",
+          "def": "CREATE UNIQUE INDEX \"PK_bee6805982cc1e248e94ce94957\" ON public.bookings USING btree (id)",
+          "table": "public.bookings",
+          "columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "IDX_48b267d894e32a25ebde4b207a",
+          "def": "CREATE INDEX \"IDX_48b267d894e32a25ebde4b207a\" ON public.bookings USING btree (status)",
+          "table": "public.bookings",
+          "columns": [
+            "status"
+          ]
+        }
+      ],
+      "constraints": [
+        {
+          "name": "FK_67b9cd20f987fc6dc70f7cd283f",
+          "type": "FOREIGN KEY",
+          "def": "FOREIGN KEY (\"customerId\") REFERENCES users(id) ON DELETE RESTRICT",
+          "table": "public.bookings",
+          "referenced_table": "public.users",
+          "columns": [
+            "customerId"
+          ],
+          "referenced_columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "FK_30909e71d6dd969e95d995258f1",
+          "type": "FOREIGN KEY",
+          "def": "FOREIGN KEY (\"vehicleId\") REFERENCES vehicles(id) ON DELETE RESTRICT",
+          "table": "public.bookings",
+          "referenced_table": "public.vehicles",
+          "columns": [
+            "vehicleId"
+          ],
+          "referenced_columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "PK_bee6805982cc1e248e94ce94957",
+          "type": "PRIMARY KEY",
+          "def": "PRIMARY KEY (id)",
+          "table": "public.bookings",
+          "referenced_table": "",
+          "columns": [
+            "id"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "public.reviews",
+      "type": "BASE TABLE",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": false,
+          "default": "uuid_generate_v4()"
+        },
+        {
+          "name": "rating",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "comment",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "userId",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "vehicleId",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "createdAt",
+          "type": "timestamp without time zone",
+          "nullable": false,
+          "default": "now()"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "PK_231ae565c273ee700b283f15c1d",
+          "def": "CREATE UNIQUE INDEX \"PK_231ae565c273ee700b283f15c1d\" ON public.reviews USING btree (id)",
+          "table": "public.reviews",
+          "columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "IDX_7ed5659e7139fc8bc039198cc1",
+          "def": "CREATE INDEX \"IDX_7ed5659e7139fc8bc039198cc1\" ON public.reviews USING btree (\"userId\")",
+          "table": "public.reviews",
+          "columns": [
+            "userId"
+          ]
+        }
+      ],
+      "constraints": [
+        {
+          "name": "FK_7ed5659e7139fc8bc039198cc1f",
+          "type": "FOREIGN KEY",
+          "def": "FOREIGN KEY (\"userId\") REFERENCES users(id) ON DELETE CASCADE",
+          "table": "public.reviews",
+          "referenced_table": "public.users",
+          "columns": [
+            "userId"
+          ],
+          "referenced_columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "FK_71782ee6bd6449d100b221357cd",
+          "type": "FOREIGN KEY",
+          "def": "FOREIGN KEY (\"vehicleId\") REFERENCES vehicles(id) ON DELETE CASCADE",
+          "table": "public.reviews",
+          "referenced_table": "public.vehicles",
+          "columns": [
+            "vehicleId"
+          ],
+          "referenced_columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "PK_231ae565c273ee700b283f15c1d",
+          "type": "PRIMARY KEY",
+          "def": "PRIMARY KEY (id)",
+          "table": "public.reviews",
+          "referenced_table": "",
+          "columns": [
+            "id"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "public.transactions",
+      "type": "BASE TABLE",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": false,
+          "default": "uuid_generate_v4()"
+        },
+        {
+          "name": "walletId",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "amount",
+          "type": "numeric(12,2)",
+          "nullable": false,
+          "default": "'0'::numeric"
+        },
+        {
+          "name": "type",
+          "type": "transactions_type_enum",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "transactions_status_enum",
+          "nullable": false,
+          "default": "'SUCCESS'::transactions_status_enum"
+        },
+        {
+          "name": "description",
+          "type": "varchar(255)",
+          "nullable": true
+        },
+        {
+          "name": "reference",
+          "type": "varchar",
+          "nullable": false
+        },
+        {
+          "name": "createdAt",
+          "type": "timestamp without time zone",
+          "nullable": false,
+          "default": "now()"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "PK_a219afd8dd77ed80f5a862f1db9",
+          "def": "CREATE UNIQUE INDEX \"PK_a219afd8dd77ed80f5a862f1db9\" ON public.transactions USING btree (id)",
+          "table": "public.transactions",
+          "columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "UQ_dd85cc865e0c3d5d4be095d3f3f",
+          "def": "CREATE UNIQUE INDEX \"UQ_dd85cc865e0c3d5d4be095d3f3f\" ON public.transactions USING btree (reference)",
+          "table": "public.transactions",
+          "columns": [
+            "reference"
+          ]
+        },
+        {
+          "name": "IDX_dd85cc865e0c3d5d4be095d3f3",
+          "def": "CREATE UNIQUE INDEX \"IDX_dd85cc865e0c3d5d4be095d3f3\" ON public.transactions USING btree (reference)",
+          "table": "public.transactions",
+          "columns": [
+            "reference"
+          ]
+        }
+      ],
+      "constraints": [
+        {
+          "name": "PK_a219afd8dd77ed80f5a862f1db9",
+          "type": "PRIMARY KEY",
+          "def": "PRIMARY KEY (id)",
+          "table": "public.transactions",
+          "referenced_table": "",
+          "columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "UQ_dd85cc865e0c3d5d4be095d3f3f",
+          "type": "UNIQUE",
+          "def": "UNIQUE (reference)",
+          "table": "public.transactions",
+          "referenced_table": "",
+          "columns": [
+            "reference"
+          ]
+        },
+        {
+          "name": "FK_a88f466d39796d3081cf96e1b66",
+          "type": "FOREIGN KEY",
+          "def": "FOREIGN KEY (\"walletId\") REFERENCES wallets(id) ON DELETE RESTRICT",
+          "table": "public.transactions",
+          "referenced_table": "public.wallets",
+          "columns": [
+            "walletId"
+          ],
+          "referenced_columns": [
+            "id"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "public.wallets",
+      "type": "BASE TABLE",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": false,
+          "default": "uuid_generate_v4()"
+        },
+        {
+          "name": "userId",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "balance",
+          "type": "numeric(12,2)",
+          "nullable": false,
+          "default": "'0'::numeric"
+        },
+        {
+          "name": "verificationAttempts",
+          "type": "integer",
+          "nullable": false,
+          "default": "0"
+        },
+        {
+          "name": "bankName",
+          "type": "varchar(100)",
+          "nullable": true
+        },
+        {
+          "name": "accountNumber",
+          "type": "varchar(50)",
+          "nullable": true
+        },
+        {
+          "name": "accountName",
+          "type": "varchar(150)",
+          "nullable": true
+        },
+        {
+          "name": "isBankVerified",
+          "type": "boolean",
+          "nullable": false,
+          "default": "false"
+        },
+        {
+          "name": "gatewayBankToken",
+          "type": "varchar(100)",
+          "nullable": true
+        },
+        {
+          "name": "microDeposits",
+          "type": "text",
+          "nullable": true
+        },
+        {
+          "name": "pendingBalance",
+          "type": "numeric(12,2)",
+          "nullable": false,
+          "default": "'0'::numeric"
+        },
+        {
+          "name": "updatedAt",
+          "type": "timestamp without time zone",
+          "nullable": false,
+          "default": "now()"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "PK_8402e5df5a30a229380e83e4f7e",
+          "def": "CREATE UNIQUE INDEX \"PK_8402e5df5a30a229380e83e4f7e\" ON public.wallets USING btree (id)",
+          "table": "public.wallets",
+          "columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "UQ_2ecdb33f23e9a6fc392025c0b97",
+          "def": "CREATE UNIQUE INDEX \"UQ_2ecdb33f23e9a6fc392025c0b97\" ON public.wallets USING btree (\"userId\")",
+          "table": "public.wallets",
+          "columns": [
+            "userId"
+          ]
+        }
+      ],
+      "constraints": [
+        {
+          "name": "FK_2ecdb33f23e9a6fc392025c0b97",
+          "type": "FOREIGN KEY",
+          "def": "FOREIGN KEY (\"userId\") REFERENCES users(id) ON DELETE CASCADE",
+          "table": "public.wallets",
+          "referenced_table": "public.users",
+          "columns": [
+            "userId"
+          ],
+          "referenced_columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "PK_8402e5df5a30a229380e83e4f7e",
+          "type": "PRIMARY KEY",
+          "def": "PRIMARY KEY (id)",
+          "table": "public.wallets",
+          "referenced_table": "",
+          "columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "UQ_2ecdb33f23e9a6fc392025c0b97",
+          "type": "UNIQUE",
+          "def": "UNIQUE (\"userId\")",
+          "table": "public.wallets",
+          "referenced_table": "",
+          "columns": [
+            "userId"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "public.log_activities",
+      "type": "BASE TABLE",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": false,
+          "default": "uuid_generate_v4()"
+        },
+        {
+          "name": "action",
+          "type": "varchar(255)",
+          "nullable": false
+        },
+        {
+          "name": "userId",
+          "type": "uuid",
+          "nullable": true
+        },
+        {
+          "name": "ipAddress",
+          "type": "varchar(45)",
+          "nullable": true
+        },
+        {
+          "name": "metaData",
+          "type": "jsonb",
+          "nullable": true
+        },
+        {
+          "name": "reference",
+          "type": "varchar",
+          "nullable": true
+        },
+        {
+          "name": "createdAt",
+          "type": "timestamp without time zone",
+          "nullable": false,
+          "default": "now()"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "PK_0d8ca6664b12f45d2c86f734c5e",
+          "def": "CREATE UNIQUE INDEX \"PK_0d8ca6664b12f45d2c86f734c5e\" ON public.log_activities USING btree (id)",
+          "table": "public.log_activities",
+          "columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "UQ_de9da7f6e0bc3f730b5dc4e178e",
+          "def": "CREATE UNIQUE INDEX \"UQ_de9da7f6e0bc3f730b5dc4e178e\" ON public.log_activities USING btree (reference)",
+          "table": "public.log_activities",
+          "columns": [
+            "reference"
+          ]
+        },
+        {
+          "name": "IDX_de9da7f6e0bc3f730b5dc4e178",
+          "def": "CREATE INDEX \"IDX_de9da7f6e0bc3f730b5dc4e178\" ON public.log_activities USING btree (reference)",
+          "table": "public.log_activities",
+          "columns": [
+            "reference"
+          ]
+        }
+      ],
+      "constraints": [
+        {
+          "name": "PK_0d8ca6664b12f45d2c86f734c5e",
+          "type": "PRIMARY KEY",
+          "def": "PRIMARY KEY (id)",
+          "table": "public.log_activities",
+          "referenced_table": "",
+          "columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "UQ_de9da7f6e0bc3f730b5dc4e178e",
+          "type": "UNIQUE",
+          "def": "UNIQUE (reference)",
+          "table": "public.log_activities",
+          "referenced_table": "",
+          "columns": [
+            "reference"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "public.audit_logs",
+      "type": "BASE TABLE",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "nullable": false,
+          "default": "uuid_generate_v4()"
+        },
+        {
+          "name": "adminId",
+          "type": "uuid",
+          "nullable": false
+        },
+        {
+          "name": "action",
+          "type": "varchar(100)",
+          "nullable": false
+        },
+        {
+          "name": "targetEntityId",
+          "type": "uuid",
+          "nullable": true
+        },
+        {
+          "name": "details",
+          "type": "jsonb",
+          "nullable": true
+        },
+        {
+          "name": "ipAddress",
+          "type": "varchar",
+          "nullable": true
+        },
+        {
+          "name": "createdAt",
+          "type": "timestamp without time zone",
+          "nullable": false,
+          "default": "now()"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "PK_1bb179d048bbc581caa3b013439",
+          "def": "CREATE UNIQUE INDEX \"PK_1bb179d048bbc581caa3b013439\" ON public.audit_logs USING btree (id)",
+          "table": "public.audit_logs",
+          "columns": [
+            "id"
+          ]
+        }
+      ],
+      "constraints": [
+        {
+          "name": "FK_9d53d8c4d4227c02e4476129d25",
+          "type": "FOREIGN KEY",
+          "def": "FOREIGN KEY (\"adminId\") REFERENCES users(id)",
+          "table": "public.audit_logs",
+          "referenced_table": "public.users",
+          "columns": [
+            "adminId"
+          ],
+          "referenced_columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "PK_1bb179d048bbc581caa3b013439",
+          "type": "PRIMARY KEY",
+          "def": "PRIMARY KEY (id)",
+          "table": "public.audit_logs",
+          "referenced_table": "",
+          "columns": [
+            "id"
+          ]
+        }
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "table": "public.vehicles",
+      "columns": [
+        "ownerId"
+      ],
+      "cardinality": "zero_or_more",
+      "parent_table": "public.users",
+      "parent_columns": [
+        "id"
+      ],
+      "parent_cardinality": "exactly_one",
+      "def": "FOREIGN KEY (\"ownerId\") REFERENCES users(id) ON DELETE CASCADE"
+    },
+    {
+      "table": "public.bookings",
+      "columns": [
+        "customerId"
+      ],
+      "cardinality": "zero_or_more",
+      "parent_table": "public.users",
+      "parent_columns": [
+        "id"
+      ],
+      "parent_cardinality": "exactly_one",
+      "def": "FOREIGN KEY (\"customerId\") REFERENCES users(id) ON DELETE RESTRICT"
+    },
+    {
+      "table": "public.bookings",
+      "columns": [
+        "vehicleId"
+      ],
+      "cardinality": "zero_or_more",
+      "parent_table": "public.vehicles",
+      "parent_columns": [
+        "id"
+      ],
+      "parent_cardinality": "exactly_one",
+      "def": "FOREIGN KEY (\"vehicleId\") REFERENCES vehicles(id) ON DELETE RESTRICT"
+    },
+    {
+      "table": "public.reviews",
+      "columns": [
+        "userId"
+      ],
+      "cardinality": "zero_or_more",
+      "parent_table": "public.users",
+      "parent_columns": [
+        "id"
+      ],
+      "parent_cardinality": "exactly_one",
+      "def": "FOREIGN KEY (\"userId\") REFERENCES users(id) ON DELETE CASCADE"
+    },
+    {
+      "table": "public.reviews",
+      "columns": [
+        "vehicleId"
+      ],
+      "cardinality": "zero_or_more",
+      "parent_table": "public.vehicles",
+      "parent_columns": [
+        "id"
+      ],
+      "parent_cardinality": "exactly_one",
+      "def": "FOREIGN KEY (\"vehicleId\") REFERENCES vehicles(id) ON DELETE CASCADE"
+    },
+    {
+      "table": "public.transactions",
+      "columns": [
+        "walletId"
+      ],
+      "cardinality": "zero_or_more",
+      "parent_table": "public.wallets",
+      "parent_columns": [
+        "id"
+      ],
+      "parent_cardinality": "exactly_one",
+      "def": "FOREIGN KEY (\"walletId\") REFERENCES wallets(id) ON DELETE RESTRICT"
+    },
+    {
+      "table": "public.wallets",
+      "columns": [
+        "userId"
+      ],
+      "cardinality": "zero_or_one",
+      "parent_table": "public.users",
+      "parent_columns": [
+        "id"
+      ],
+      "parent_cardinality": "exactly_one",
+      "def": "FOREIGN KEY (\"userId\") REFERENCES users(id) ON DELETE CASCADE"
+    },
+    {
+      "table": "public.audit_logs",
+      "columns": [
+        "adminId"
+      ],
+      "cardinality": "zero_or_more",
+      "parent_table": "public.users",
+      "parent_columns": [
+        "id"
+      ],
+      "parent_cardinality": "exactly_one",
+      "def": "FOREIGN KEY (\"adminId\") REFERENCES users(id)"
+    }
+  ],
+  "functions": [
+    {
+      "name": "public.uuid_nil",
+      "return_type": "uuid",
+      "arguments": "",
+      "type": "FUNCTION"
+    },
+    {
+      "name": "public.uuid_ns_dns",
+      "return_type": "uuid",
+      "arguments": "",
+      "type": "FUNCTION"
+    },
+    {
+      "name": "public.uuid_ns_url",
+      "return_type": "uuid",
+      "arguments": "",
+      "type": "FUNCTION"
+    },
+    {
+      "name": "public.uuid_ns_oid",
+      "return_type": "uuid",
+      "arguments": "",
+      "type": "FUNCTION"
+    },
+    {
+      "name": "public.uuid_ns_x500",
+      "return_type": "uuid",
+      "arguments": "",
+      "type": "FUNCTION"
+    },
+    {
+      "name": "public.uuid_generate_v1",
+      "return_type": "uuid",
+      "arguments": "",
+      "type": "FUNCTION"
+    },
+    {
+      "name": "public.uuid_generate_v1mc",
+      "return_type": "uuid",
+      "arguments": "",
+      "type": "FUNCTION"
+    },
+    {
+      "name": "public.uuid_generate_v3",
+      "return_type": "uuid",
+      "arguments": "namespace uuid, name text",
+      "type": "FUNCTION"
+    },
+    {
+      "name": "public.uuid_generate_v4",
+      "return_type": "uuid",
+      "arguments": "",
+      "type": "FUNCTION"
+    },
+    {
+      "name": "public.uuid_generate_v5",
+      "return_type": "uuid",
+      "arguments": "namespace uuid, name text",
+      "type": "FUNCTION"
+    }
+  ],
+  "enums": [
+    {
+      "name": "public.bookings_status_enum",
+      "values": [
+        "ACTIVE",
+        "AWAITING_PAYMENT",
+        "CANCELLED",
+        "COMPLETED",
+        "PAID",
+        "PENDING"
+      ]
+    },
+    {
+      "name": "public.transactions_status_enum",
+      "values": [
+        "FAILED",
+        "PENDING",
+        "SUCCESS"
+      ]
+    },
+    {
+      "name": "public.transactions_type_enum",
+      "values": [
+        "CREDIT",
+        "DEBIT"
+      ]
+    },
+    {
+      "name": "public.users_role_enum",
+      "values": [
+        "ADMIN",
+        "CAR_OWNER",
+        "CEO",
+        "CUSTOMER"
+      ]
+    },
+    {
+      "name": "public.vehicles_fueltype_enum",
+      "values": [
+        "DIESEL",
+        "ELECTRIC",
+        "HYBRID",
+        "PETROL"
+      ]
+    },
+    {
+      "name": "public.vehicles_transmission_enum",
+      "values": [
+        "AUTOMATIC",
+        "MANUAL"
+      ]
+    }
+  ],
+  "driver": {
+    "name": "postgres",
+    "database_version": "PostgreSQL 16.14 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit",
+    "meta": {
+      "current_schema": "public",
+      "search_paths": [
+        "postgres",
+        "public"
+      ],
+      "dict": {
+        "Functions": "Stored procedures and functions"
+      }
+    }
+  }
+}
