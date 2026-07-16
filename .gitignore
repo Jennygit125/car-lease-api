@@ -1,0 +1,15 @@
+
+/src/generated/prisma
+node_modules/
+pnpm-lock.yaml
+# Sensitive data
+.env
+# Compiled output
+dist/
+build/
+out/
+*.log
+.eslintcache
+# Docker artifacts
+docker-compose.override.yml
+*.log

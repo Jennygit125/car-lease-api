@@ -1,0 +1,56 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/server.js",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "pnpm run swagger && tsc",
+    "start": "node dist/server.js",
+    "swagger": "tsx swagger.ts",
+    "migration:generate": "typeorm-ts-node-esm migration:generate -d src/db/datasource.ts",
+    "migration:run": "typeorm-ts-node-esm migration:run -d src/db/datasource.ts",
+    "migration:revert": "typeorm-ts-node-esm migration:revert -d src/db/datasource.ts"
+  },
+  "dependencies": {
+    "@types/morgan": "^1.9.10",
+    "@types/swagger-ui-express": "^4.1.8",
+    "bcrypt": "^6.0.0",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.1",
+    "cloudinary": "^2.5.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^5.0.1",
+    "express-rate-limit": "^8.5.2",
+    "helmet": "^8.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.11.0",
+    "multer": "^1.4.5-lts.1",
+    "pg": "^8.13.1",
+    "pino": "^10.3.1",
+    "reflect-metadata": "^0.2.2",
+    "swagger-ui-express": "^5.0.1",
+    "typeorm": "0.3.20",
+    "uuid": "^11.0.3"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "@types/jsonwebtoken": "^9.0.7",
+    "@types/multer": "^1.4.12",
+    "@types/node": "^22.10.2",
+    "swagger-autogen": "^2.23.7",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@scarf/scarf",
+      "bcrypt",
+      "esbuild"
+    ]
+  }
+}
