@@ -1,15 +1,19 @@
 {
   "compilerOptions": {
-    "target": "es2021",
-    "module": "commonjs",
-    "lib": ["es2021"],
-    "outDir": "./dist",
-    "rootDir": "./src",
-    "strict": true,
-    "esModuleInterop": true,
+    "target": "ES2022",                         /* Modern JavaScript features for backend */
+    "module": "ESNext",                         /* Enables modern ES modules (import/export) */
+    "moduleResolution": "Bundler",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
-  }
+    "allowSyntheticDefaultImports": true,
+                                /* Allows extensionless relative imports */
+    "esModuleInterop": true,                    /* Smooth compatibility with older npm packages */
+    "sourceMap": true,                          /* Keeps your original line numbers in Docker logs */
+    "outDir": "build",                          /* Compiles files here */
+    "rootDir": "src",                           /* Prevents nested 'build/src' folders */
+    "forceConsistentCasingInFileNames": true,  /* Prevents case-sensitivity crashes in Docker */
+    "skipLibCheck": true                        /* Fast container compilation speeds */
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "build"]
 }
